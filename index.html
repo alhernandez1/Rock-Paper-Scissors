@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
 </head>
 <body>
+    <button id="rock" class="game">Rock</button>
+    <button id="paper" class="game">Paper</button>
+    <button id="scissors" class="game">Scissors</button>
+
+    <div class="results"></div>
+
     <script>
+        const rock = document.getElementById('rock');
+        const paper = document.getElementById('paper');
+        const scissors = document.getElementById('scissors');
+        
+        rock.addEventListener("click", game);
+        paper.addEventListener("click", game);
+        scissors.addEventListener("click", game);
+
         function getComputerChoice()
         {
             let comp = Math.floor(Math.random() * 3);
@@ -35,54 +49,65 @@
             let player = playerSelection.toLowerCase();
             const p = 1;
             const c = 2;
+
+            const result = document.querySelector('.results');
             
             if (player == "rock" && computerSelection == "paper")
             {
-                alert("You lose! Paper beats Rock");
+                console.log("You lose! Paper beats Rock");
+                result.textContent = "You lose! Paper beats Rock";
                 return 2; 
             }
             else if (player == "paper" && computerSelection == "scissors")
             {
-                alert("You lose! Scissors cuts Paper"); 
+                console.log("You lose! Scissors cuts Paper"); 
+                result.textContent = "You lose! Scissors cuts Paper";
                 return 2;
             }
             else if (player == "scissors" && computerSelection == "rock")
             {
-                alert("You lose! Rock crushes Scissors");
+                console.log("You lose! Rock crushes Scissors");
+                result.textContent = "You lose! Rock crushes Scissors";
                 return 2;
             }
             else if (player == "rock" && computerSelection == "scissors")
             {
-                alert("You win! Rock crushes Scissors");
+                console.log("You win! Rock crushes Scissors");
+                result.textContent = "You win! Rock crushes Scissors";
                 return 1;
             }
             else if (player == "scissors" && computerSelection == "paper")
             {
-                alert("You win! Scissors cuts Paper");
+                console.log("You win! Scissors cuts Paper");
+                result.textContent = "You win! Scissors cuts Paper";
                 return 1;
             }
             else if (player == "paper" && computerSelection == "rock")
             {
-                alert("You win! Paper beats Rock");
+                console.log("You win! Paper beats Rock");
+                result.textContent = "You win! Paper beats Rock";
                 return 1;
             }
             else
             {
-                alert("You tie, there is no winner. Try again.");
+                console.log("You tie, there is no winner. Try again.");
+                result.textContent = "You tie, there is no winner. Try again.";
                 return 0;
             }
         }
 
-        function game()
+        function game(e)
         {
             let count = 0;
             let tie = 0;
 
-            for (let i = 0; i < 5; i++)
-            {
-                let playerSelection = prompt("Type 'Rock', 'Paper' or 'Scissors'");
-                let computerSelection = getComputerChoice();
+            
+            let src = e.target;
+            let playerSelection = src.id;
+            let computerSelection = getComputerChoice();
 
+            if (count < 5)
+            {
                 const result = playRound(playerSelection, computerSelection);
                 if (result == 1)
                 {
@@ -93,24 +118,26 @@
                     tie++;
                 }
             }
-            
-            let comp = (5 - tie) - count;
-
-            if (comp > count)
-            {
-                return "You lose the game! " + comp + "-" + count + "-" + tie + " Computers are superior!";
-            }
-            else if (comp < count)
-            {
-                return "You win the game! " + count + "-" + comp + "-" + tie + " Humans are superior!";
-            }
             else
             {
-                return "Tie Game! " + comp + " to " + count;
+                let comp = (5 - tie) - count;
+
+                if (comp > count)
+                {
+                    console.log("You lose the game! " + comp + "-" + count + "-" + tie + " Computers are superior!");
+                }
+                else if (comp < count)
+                {
+                    console.log("You win the game! " + count + "-" + comp + "-" + tie + " Humans are superior!");
+                }
+                else
+                {
+                    console.log("Tie Game! " + comp + " to " + count);
+                }
             }
         }
 
-        console.log(game());
+        //console.log(game());
 
     </script>
     
